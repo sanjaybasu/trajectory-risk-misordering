@@ -1,0 +1,332 @@
+{
+  "Erd\u0151s": {
+    "delta": 0.22159686207376872,
+    "kendall_tau": 0.5568062758524626,
+    "missed_frac": 0.0,
+    "equity_gap": 0.08655568806739303,
+    "by_group": {
+      "Advantaged": {
+        "delta": 0.21384070796460178,
+        "kendall_tau": 0.5723185840707965,
+        "n_discordant": 42287,
+        "n_valid_pairs": 197750,
+        "group": "Advantaged",
+        "n_patients": 1355,
+        "mean_beta": 0.2565118550805265,
+        "mean_r": 0.5731740362964698,
+        "mean_R": 0.3262263222632226
+      },
+      "Disadvantaged-A": {
+        "delta": 0.2516038036307384,
+        "kendall_tau": 0.49679239273852316,
+        "n_discordant": 49770,
+        "n_valid_pairs": 197811,
+        "group": "Disadvantaged-A",
+        "n_patients": 742,
+        "mean_beta": 0.41227144438477936,
+        "mean_r": 0.803236251731938,
+        "mean_R": 0.36667115902964964
+      },
+      "Disadvantaged-B": {
+        "delta": 0.2664560826323677,
+        "kendall_tau": 0.4670878347352646,
+        "n_discordant": 52806,
+        "n_valid_pairs": 198179,
+        "group": "Disadvantaged-B",
+        "n_patients": 597,
+        "mean_beta": 0.5871043372095369,
+        "mean_r": 1.1062172447543601,
+        "mean_R": 0.41197654941373535
+      },
+      "Disadvantaged-C": {
+        "delta": 0.3003963960319948,
+        "kendall_tau": 0.3992072079360104,
+        "n_discordant": 59413,
+        "n_valid_pairs": 197782,
+        "group": "Disadvantaged-C",
+        "n_patients": 306,
+        "mean_beta": 0.7312103900771031,
+        "mean_r": 1.27992646242335,
+        "mean_R": 0.454041394335512
+      }
+    },
+    "missed_details": {
+      "frac_missed": 0.0,
+      "n_truly_high_risk": 305,
+      "n_missed_by_standard_score": 0,
+      "r_cutoff": 0.5292080872616303,
+      "R_cutoff": 0.5233333333333333
+    },
+    "pop_stats": {
+      "mean_beta": 0.4092435480151022,
+      "var_beta": 0.09935215375075772,
+      "mean_r": 0.8082404368622375,
+      "mean_R": 0.3663311111111111,
+      "corr_r_R": 0.6107079027146058
+    }
+  },
+  "Cox": {
+    "delta": 0.04399779025424244,
+    "kendall_tau": 0.9120044194915151,
+    "missed_frac": 0.0,
+    "equity_gap": 0.005926977034150738,
+    "by_group": {
+      "Advantaged": {
+        "delta": 0.046077084296306615,
+        "kendall_tau": 0.9078458314073867,
+        "n_discordant": 7277,
+        "n_valid_pairs": 157931,
+        "group": "Advantaged",
+        "n_patients": 1355,
+        "mean_beta": 0.5025403383827998,
+        "mean_r": 0.49973917017240355,
+        "mean_R": 0.08721771217712176
+      },
+      "Disadvantaged-A": {
+        "delta": 0.04021616333376038,
+        "kendall_tau": 0.9195676733324792,
+        "n_discordant": 6906,
+        "n_valid_pairs": 171722,
+        "group": "Disadvantaged-A",
+        "n_patients": 742,
+        "mean_beta": 0.7069213667342356,
+        "mean_r": 0.7784026884220097,
+        "mean_R": 0.14269991015274033
+      },
+      "Disadvantaged-B": {
+        "delta": 0.04015010726215588,
+        "kendall_tau": 0.9196997854756882,
+        "n_discordant": 6719,
+        "n_valid_pairs": 167347,
+        "group": "Disadvantaged-B",
+        "n_patients": 597,
+        "mean_beta": 0.8183092820389629,
+        "mean_r": 0.7212273277191031,
+        "mean_R": 0.13130653266331657
+      },
+      "Disadvantaged-C": {
+        "delta": 0.04522523167197395,
+        "kendall_tau": 0.9095495366560521,
+        "n_discordant": 7584,
+        "n_valid_pairs": 167694,
+        "group": "Disadvantaged-C",
+        "n_patients": 306,
+        "mean_beta": 0.8794239372375202,
+        "mean_r": 0.746716683658487,
+        "mean_R": 0.13623093681917212
+      }
+    },
+    "missed_details": {
+      "frac_missed": 0.0,
+      "n_truly_high_risk": 301,
+      "n_missed_by_standard_score": 0,
+      "r_cutoff": 0.22420780119504594,
+      "R_cutoff": 0.43333333333333335
+    },
+    "pop_stats": {
+      "mean_beta": 0.6543707262658128,
+      "var_beta": 0.09234655911793986,
+      "mean_r": 0.6379297967468466,
+      "mean_R": 0.11471333333333333,
+      "corr_r_R": 0.8938160443134345
+    }
+  },
+  "Peters": {
+    "delta": 0.11891821164724117,
+    "kendall_tau": 0.7621635767055177,
+    "missed_frac": 0.0,
+    "equity_gap": 0.03556509944541057,
+    "by_group": {
+      "Advantaged": {
+        "delta": 0.10156112255744014,
+        "kendall_tau": 0.7968777548851197,
+        "n_discordant": 20161,
+        "n_valid_pairs": 198511,
+        "group": "Advantaged",
+        "n_patients": 1355,
+        "mean_beta": 0.2123126382577182,
+        "mean_r": 0.32951011837591926,
+        "mean_R": 0.2823124231242312
+      },
+      "Disadvantaged-A": {
+        "delta": 0.11730737252649241,
+        "kendall_tau": 0.7653852549470151,
+        "n_discordant": 23280,
+        "n_valid_pairs": 198453,
+        "group": "Disadvantaged-A",
+        "n_patients": 742,
+        "mean_beta": 0.41485855670000715,
+        "mean_r": 0.44629968569076817,
+        "mean_R": 0.3146900269541779
+      },
+      "Disadvantaged-B": {
+        "delta": 0.1371262220028507,
+        "kendall_tau": 0.7257475559942985,
+        "n_discordant": 27226,
+        "n_valid_pairs": 198547,
+        "group": "Disadvantaged-B",
+        "n_patients": 597,
+        "mean_beta": 0.5471935018181519,
+        "mean_r": 0.49765347314077846,
+        "mean_R": 0.3261976549413735
+      },
+      "Disadvantaged-C": {
+        "delta": 0.13225970777075588,
+        "kendall_tau": 0.7354805844584882,
+        "n_discordant": 26223,
+        "n_valid_pairs": 198269,
+        "group": "Disadvantaged-C",
+        "n_patients": 306,
+        "mean_beta": 0.6487080230249056,
+        "mean_r": 0.6217763300940997,
+        "mean_R": 0.37138344226579517
+      }
+    },
+    "missed_details": {
+      "frac_missed": 0.0,
+      "n_truly_high_risk": 307,
+      "n_missed_by_standard_score": 0,
+      "r_cutoff": 0.33028359739399604,
+      "R_cutoff": 0.5233333333333333
+    },
+    "pop_stats": {
+      "mean_beta": 0.37356261651389044,
+      "var_beta": 0.05110731483665329,
+      "mean_r": 0.42166775255191996,
+      "mean_R": 0.30813888888888885,
+      "corr_r_R": 0.7644300295980833
+    }
+  },
+  "Hawkes": {
+    "delta": 0.08308948621980265,
+    "kendall_tau": 0.8338210275603947,
+    "missed_frac": 0.0,
+    "equity_gap": 0.015000318318613204,
+    "by_group": {
+      "Advantaged": {
+        "delta": 0.07993178294573644,
+        "kendall_tau": 0.8401364341085271,
+        "n_discordant": 12889,
+        "n_valid_pairs": 161250,
+        "group": "Advantaged",
+        "n_patients": 1355,
+        "mean_beta": 0.801324830107307,
+        "mean_r": 0.2120106878492973,
+        "mean_R": 0.02571955719557196
+      },
+      "Disadvantaged-A": {
+        "delta": 0.09022663477915126,
+        "kendall_tau": 0.8195467304416975,
+        "n_discordant": 15204,
+        "n_valid_pairs": 168509,
+        "group": "Disadvantaged-A",
+        "n_patients": 742,
+        "mean_beta": 0.8543836306912386,
+        "mean_r": 0.2499599002382329,
+        "mean_R": 0.02975741239892183
+      },
+      "Disadvantaged-B": {
+        "delta": 0.07522631646053805,
+        "kendall_tau": 0.8495473670789239,
+        "n_discordant": 12390,
+        "n_valid_pairs": 164703,
+        "group": "Disadvantaged-B",
+        "n_patients": 597,
+        "mean_beta": 0.8855395793295011,
+        "mean_r": 0.2634177454308333,
+        "mean_R": 0.031077610273590177
+      },
+      "Disadvantaged-C": {
+        "delta": 0.08056470029955215,
+        "kendall_tau": 0.8388705994008957,
+        "n_discordant": 13582,
+        "n_valid_pairs": 168585,
+        "group": "Disadvantaged-C",
+        "n_patients": 306,
+        "mean_beta": 0.9077654605415494,
+        "mean_r": 0.33170951367183277,
+        "mean_R": 0.03887799564270153
+      }
+    },
+    "missed_details": {
+      "frac_missed": 0.0,
+      "n_truly_high_risk": 303,
+      "n_missed_by_standard_score": 0,
+      "r_cutoff": 0.14890945081312829,
+      "R_cutoff": 0.08666666666666667
+    },
+    "pop_stats": {
+      "mean_beta": 0.8420637195179088,
+      "var_beta": 0.01564351873950678,
+      "mean_r": 0.24383607773945168,
+      "mean_R": 0.029126666666666665,
+      "corr_r_R": 0.9330930821276565
+    }
+  },
+  "Obermeyer": {
+    "delta": 0.15199676217055388,
+    "kendall_tau": 0.6960064756588922,
+    "missed_frac": 0.0,
+    "equity_gap": 0.019545688011851525,
+    "by_group": {
+      "Advantaged": {
+        "delta": 0.1575074393503808,
+        "kendall_tau": 0.6849851212992384,
+        "n_discordant": 31229,
+        "n_valid_pairs": 198270,
+        "group": "Advantaged",
+        "n_patients": 1355,
+        "mean_beta": 0.19943458197966316,
+        "mean_r": 0.5197852560597501,
+        "mean_R": 0.284130381303813
+      },
+      "Disadvantaged-A": {
+        "delta": 0.16565805187017843,
+        "kendall_tau": 0.6686838962596431,
+        "n_discordant": 32876,
+        "n_valid_pairs": 198457,
+        "group": "Disadvantaged-A",
+        "n_patients": 742,
+        "mean_beta": 0.5500750197237402,
+        "mean_r": 0.797213591696881,
+        "mean_R": 0.3520035938903863
+      },
+      "Disadvantaged-B": {
+        "delta": 0.1548750138537647,
+        "kendall_tau": 0.6902499722924706,
+        "n_discordant": 30743,
+        "n_valid_pairs": 198502,
+        "group": "Disadvantaged-B",
+        "n_patients": 597,
+        "mean_beta": 0.7461043001810249,
+        "mean_r": 0.8523757778348177,
+        "mean_R": 0.37003350083752096
+      },
+      "Disadvantaged-C": {
+        "delta": 0.1461123638583269,
+        "kendall_tau": 0.7077752722833461,
+        "n_discordant": 28964,
+        "n_valid_pairs": 198231,
+        "group": "Disadvantaged-C",
+        "n_patients": 306,
+        "mean_beta": 0.918099008415607,
+        "mean_r": 0.9185765171333924,
+        "mean_R": 0.398235294117647
+      }
+    },
+    "missed_details": {
+      "frac_missed": 0.0,
+      "n_truly_high_risk": 302,
+      "n_missed_by_standard_score": 0,
+      "r_cutoff": 0.5181502193502414,
+      "R_cutoff": 0.5366666666666666
+    },
+    "pop_stats": {
+      "mean_beta": 0.4682506956669022,
+      "var_beta": 0.087309712712658,
+      "mean_r": 0.6952647535367505,
+      "mean_R": 0.3296511111111111,
+      "corr_r_R": 0.7336565102870255
+    }
+  }
+}

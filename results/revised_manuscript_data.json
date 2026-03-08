@@ -1,0 +1,808 @@
+{
+  "primary_analysis": {
+    "primary": {
+      "config": "primary",
+      "calibration": {
+        "config": "primary",
+        "lambda_0_dist": "Gamma(3.0, 0.2)",
+        "lambda_1_model": "lambda_0 * (1 + Gamma(2.0, 0.8))",
+        "beta_dist": "Beta(3.0, 7.0) + group offset",
+        "mu_dist": "Gamma(4.0, 1.0) * group scale",
+        "group_beta_offsets": [
+          0.0,
+          0.04,
+          0.07,
+          0.1
+        ],
+        "group_mu_scales": [
+          1.0,
+          0.85,
+          0.75,
+          0.65
+        ],
+        "references": [
+          "Jencks SF et al. NEJM 2009;360:1418-1428",
+          "Krumholz HM. NEJM 2013;368:100-102",
+          "Dharmarajan K et al. JAMA 2013;309:355-363",
+          "Tsai TC et al. Health Aff 2014;33:786-793",
+          "Wadhera RK et al. JAMA Cardiol 2019;4:885-893"
+        ]
+      },
+      "scoring_comparison": {
+        "standard": {
+          "delta": 0.034658585565898396,
+          "delta_ci": {
+            "mean": 0.034213017436451505,
+            "ci_lower": 0.03298224818664984,
+            "ci_upper": 0.035444977838617865,
+            "se": 0.0006503804606152373
+          },
+          "tau": 0.9306828288682032,
+          "corr": 0.9739648805534006,
+          "missed_frac": 0.0,
+          "missed_ci": {
+            "mean": 0.0,
+            "ci_lower": 0.0,
+            "ci_upper": 0.0
+          },
+          "c_statistic": 0.9653414144341016
+        },
+        "trajectory_aware": {
+          "delta": 0.03451370527324021,
+          "delta_ci": {
+            "mean": 0.03420296880609159,
+            "ci_lower": 0.0329185414481294,
+            "ci_upper": 0.0355133136644494,
+            "se": 0.0006657227013487832
+          },
+          "tau": 0.9309725894535196,
+          "corr": 0.9897100700673975,
+          "c_statistic": 0.9654862947267598,
+          "nri_vs_standard": {
+            "nri_total": 0.7259534611954048,
+            "nri_events": 0.28355837966640185,
+            "nri_nonevents": 0.442395081529003,
+            "n_high_risk": 1259,
+            "n_low_risk": 3741
+          }
+        },
+        "augmented": {
+          "delta": 0.05234605462791924,
+          "delta_ci": {
+            "mean": 0.05217010705904041,
+            "ci_lower": 0.05009824220422411,
+            "ci_upper": 0.05424805943650979,
+            "se": 0.0010703448126288954
+          },
+          "tau": 0.8953078907441615,
+          "corr": 0.9332770444090017,
+          "c_statistic": 0.9476539453720808,
+          "nri_vs_standard": {
+            "nri_total": -0.13351397338255705,
+            "nri_events": -0.3478951548848292,
+            "nri_nonevents": 0.21438118150227214,
+            "n_high_risk": 1259,
+            "n_low_risk": 3741
+          }
+        }
+      },
+      "by_group": {
+        "Low social risk": {
+          "delta": 0.03508957326892109,
+          "mean": 0.03527466441689748,
+          "ci_lower": 0.0333987584201373,
+          "ci_upper": 0.037254563284457226,
+          "se": 0.0009911271732869955,
+          "n_patients": 2268,
+          "mean_beta": 0.2981128748263015,
+          "mean_mu": 3.909548499667803
+        },
+        "Moderate social risk": {
+          "delta": 0.03265279413689308,
+          "mean": 0.032365420242505355,
+          "ci_lower": 0.03024723634554638,
+          "ci_upper": 0.034610593814898255,
+          "se": 0.0011197204932184325,
+          "n_patients": 1238,
+          "mean_beta": 0.35131668846631176,
+          "mean_mu": 3.393358976974329
+        },
+        "High social risk": {
+          "delta": 0.03330447214223869,
+          "mean": 0.0335336751458876,
+          "ci_lower": 0.031048750038785943,
+          "ci_upper": 0.03620328166028502,
+          "se": 0.001323344016080488,
+          "n_patients": 990,
+          "mean_beta": 0.3798503783635557,
+          "mean_mu": 2.9209088159677927
+        },
+        "Very high social risk": {
+          "delta": 0.034555864979327916,
+          "mean": 0.034185641312000525,
+          "ci_lower": 0.030745755036964403,
+          "ci_upper": 0.03784475679005411,
+          "se": 0.0018127517234483139,
+          "n_patients": 504,
+          "mean_beta": 0.389160920490955,
+          "mean_mu": 2.642274052527224
+        }
+      },
+      "pop_stats": {
+        "n": 5000,
+        "mean_beta": 0.3366478077869414,
+        "std_beta": 0.14534402675843267,
+        "mean_lambda_0": 0.6011840591473726,
+        "std_lambda_0": 0.34401252290510914,
+        "mean_lambda_1": 1.5835265798648466,
+        "std_lambda_1": 1.2244936495850889,
+        "mean_mu": 3.4582480522045267,
+        "std_mu": 1.77558545329488,
+        "mean_r": 0.6855391938112334,
+        "std_r": 0.4492622899908614,
+        "mean_R_gold": 0.1739448,
+        "std_R_gold": 0.16699324103974986,
+        "mean_R_analytical": 0.1825452087125462,
+        "std_R_analytical": 0.18582838086549916
+      },
+      "T": 2.0,
+      "k": 3,
+      "n_sims": 500
+    },
+    "low_acuity": {
+      "config": "low_acuity",
+      "calibration": {
+        "config": "low_acuity",
+        "lambda_0_dist": "varied",
+        "lambda_1_model": "lambda_0 * (1 + Gamma(2.0, 0.8))",
+        "beta_dist": "Beta(3.0, 7.0) + group offset",
+        "mu_dist": "Gamma(4.0, 1.0) * group scale",
+        "group_beta_offsets": [
+          0.0,
+          0.03,
+          0.05,
+          0.08
+        ],
+        "group_mu_scales": [
+          1.0,
+          0.9,
+          0.8,
+          0.7
+        ],
+        "references": [
+          "Jencks SF et al. NEJM 2009;360:1418-1428",
+          "Krumholz HM. NEJM 2013;368:100-102",
+          "Dharmarajan K et al. JAMA 2013;309:355-363",
+          "Tsai TC et al. Health Aff 2014;33:786-793",
+          "Wadhera RK et al. JAMA Cardiol 2019;4:885-893"
+        ]
+      },
+      "scoring_comparison": {
+        "standard": {
+          "delta": 0.049831950568516574,
+          "delta_ci": {
+            "mean": 0.049831950568516574,
+            "ci_lower": null,
+            "ci_upper": null,
+            "se": null
+          },
+          "tau": 0.9003360988629668,
+          "corr": 0.9414411912653645,
+          "missed_frac": 0.0,
+          "missed_ci": {
+            "mean": 0.0,
+            "ci_lower": null,
+            "ci_upper": null
+          },
+          "c_statistic": 0.9501680494314835
+        },
+        "trajectory_aware": {
+          "delta": 0.04944406354637766,
+          "delta_ci": {
+            "mean": 0.04944406354637766,
+            "ci_lower": null,
+            "ci_upper": null,
+            "se": null
+          },
+          "tau": 0.9011118729072447,
+          "corr": 0.9901464325748308,
+          "c_statistic": 0.9505559364536224,
+          "nri_vs_standard": {
+            "nri_total": 0.18964206457318922,
+            "nri_events": -0.5350269438029254,
+            "nri_nonevents": 0.7246690083761146,
+            "n_high_risk": 1299,
+            "n_low_risk": 3701
+          }
+        },
+        "augmented": {
+          "delta": 0.0511402830107581,
+          "delta_ci": {
+            "mean": 0.0511402830107581,
+            "ci_lower": null,
+            "ci_upper": null,
+            "se": null
+          },
+          "tau": 0.8977194339784837,
+          "corr": 0.9374989802039485,
+          "c_statistic": 0.9488597169892419,
+          "nri_vs_standard": {
+            "nri_total": -0.033219284719877784,
+            "nri_events": -0.26558891454965355,
+            "nri_nonevents": 0.23236962982977577,
+            "n_high_risk": 1299,
+            "n_low_risk": 3701
+          }
+        }
+      },
+      "by_group": {
+        "Low social risk": {
+          "delta": 0.049308683356028074,
+          "n_patients": 2272,
+          "mean_beta": 0.2278742756644145
+        },
+        "Moderate social risk": {
+          "delta": 0.048843644885724596,
+          "n_patients": 1242,
+          "mean_beta": 0.2543039628456428
+        },
+        "High social risk": {
+          "delta": 0.05282595410195351,
+          "n_patients": 988,
+          "mean_beta": 0.282389083991174
+        },
+        "Very high social risk": {
+          "delta": 0.05024370173439676,
+          "n_patients": 498,
+          "mean_beta": 0.3100415919600098
+        }
+      },
+      "pop_stats": {
+        "n": 5000,
+        "mean_beta": 0.2533954007886406,
+        "std_beta": 0.12582101417710528,
+        "mean_lambda_0": 0.30032244372677735,
+        "std_lambda_0": 0.20979075540709746,
+        "mean_lambda_1": 0.5758197493809387,
+        "std_lambda_1": 0.496727374271876,
+        "mean_mu": 5.38050119497261,
+        "std_mu": 2.475086236098294,
+        "mean_r": 0.3077578445811515,
+        "std_r": 0.22170733584969837,
+        "mean_R_gold": 0.0440296,
+        "std_R_gold": 0.07029195632389242,
+        "mean_R_analytical": 0.04389091490732792,
+        "std_R_analytical": 0.07155566757633429
+      },
+      "T": 2.0,
+      "k": 3,
+      "n_sims": 500
+    },
+    "high_acuity": {
+      "config": "high_acuity",
+      "calibration": {
+        "config": "high_acuity",
+        "lambda_0_dist": "varied",
+        "lambda_1_model": "lambda_0 * (1 + Gamma(2.0, 0.8))",
+        "beta_dist": "Beta(3.0, 7.0) + group offset",
+        "mu_dist": "Gamma(4.0, 1.0) * group scale",
+        "group_beta_offsets": [
+          0.0,
+          0.05,
+          0.09,
+          0.14
+        ],
+        "group_mu_scales": [
+          1.0,
+          0.8,
+          0.7,
+          0.55
+        ],
+        "references": [
+          "Jencks SF et al. NEJM 2009;360:1418-1428",
+          "Krumholz HM. NEJM 2013;368:100-102",
+          "Dharmarajan K et al. JAMA 2013;309:355-363",
+          "Tsai TC et al. Health Aff 2014;33:786-793",
+          "Wadhera RK et al. JAMA Cardiol 2019;4:885-893"
+        ]
+      },
+      "scoring_comparison": {
+        "standard": {
+          "delta": 0.06096392209385789,
+          "delta_ci": {
+            "mean": 0.06096392209385789,
+            "ci_lower": null,
+            "ci_upper": null,
+            "se": null
+          },
+          "tau": 0.8780721558122843,
+          "corr": 0.8567646745529426,
+          "missed_frac": 0.0,
+          "missed_ci": {
+            "mean": 0.0,
+            "ci_lower": null,
+            "ci_upper": null
+          },
+          "c_statistic": 0.9390360779061421
+        },
+        "trajectory_aware": {
+          "delta": 0.048847728539520484,
+          "delta_ci": {
+            "mean": 0.048847728539520484,
+            "ci_lower": null,
+            "ci_upper": null,
+            "se": null
+          },
+          "tau": 0.9023045429209591,
+          "corr": 0.9815487641669762,
+          "c_statistic": 0.9511522714604795,
+          "nri_vs_standard": {
+            "nri_total": 0.3276323860346643,
+            "nri_events": 0.45353455123113584,
+            "nri_nonevents": -0.12590216519647152,
+            "n_high_risk": 1259,
+            "n_low_risk": 3741
+          }
+        },
+        "augmented": {
+          "delta": 0.11386976345051869,
+          "delta_ci": {
+            "mean": 0.11386976345051869,
+            "ci_lower": null,
+            "ci_upper": null,
+            "se": null
+          },
+          "tau": 0.7722604730989626,
+          "corr": 0.6706107481665662,
+          "c_statistic": 0.8861302365494813,
+          "nri_vs_standard": {
+            "nri_total": -0.32069765955635327,
+            "nri_events": -0.4519459888800635,
+            "nri_nonevents": 0.13124832932371022,
+            "n_high_risk": 1259,
+            "n_low_risk": 3741
+          }
+        }
+      },
+      "by_group": {
+        "Low social risk": {
+          "delta": 0.056830661377916626,
+          "n_patients": 2268,
+          "mean_beta": 0.39103114648968024
+        },
+        "Moderate social risk": {
+          "delta": 0.06731642229768707,
+          "n_patients": 1239,
+          "mean_beta": 0.44054877403359194
+        },
+        "High social risk": {
+          "delta": 0.056708632191402916,
+          "n_patients": 988,
+          "mean_beta": 0.48218109596966297
+        },
+        "Very high social risk": {
+          "delta": 0.07162447257383966,
+          "n_patients": 505,
+          "mean_beta": 0.5249073863543471
+        }
+      },
+      "pop_stats": {
+        "n": 5000,
+        "mean_beta": 0.4348343448386375,
+        "std_beta": 0.16367049430473982,
+        "mean_lambda_0": 1.0020350409001788,
+        "std_lambda_0": 0.4964300796268404,
+        "mean_lambda_1": 3.423482852057033,
+        "std_lambda_1": 2.3119549268050315,
+        "mean_mu": 1.991040325959408,
+        "std_mu": 1.2050054023494754,
+        "mean_r": 1.6078280013991753,
+        "std_r": 1.189778823661737,
+        "mean_R_gold": 0.4176584,
+        "std_R_gold": 0.24101166135571117,
+        "mean_R_analytical": 0.483834549971132,
+        "std_R_analytical": 0.2852934137911965
+      },
+      "T": 2.0,
+      "k": 3,
+      "n_sims": 500
+    }
+  },
+  "sensitivity": {
+    "sensitivity_grid": [
+      {
+        "k": 1,
+        "T": 0.5,
+        "delta_standard": 0.07475393303751512,
+        "delta_trajectory_aware": 0.06375958047599839,
+        "tau": 0.8504921339249698,
+        "corr": 0.8998425719143308,
+        "missed_frac": 0.0,
+        "mean_R": 0.2491711111111111
+      },
+      {
+        "k": 2,
+        "T": 0.5,
+        "delta_standard": 0.08147503849190073,
+        "delta_trajectory_aware": 0.09287111448222983,
+        "tau": 0.8370499230161985,
+        "corr": 0.9434784304806041,
+        "missed_frac": 0.0,
+        "mean_R": 0.053427777777777775
+      },
+      {
+        "k": 3,
+        "T": 0.5,
+        "delta_standard": 0.10724760831098354,
+        "delta_trajectory_aware": 0.1217606886712517,
+        "tau": 0.7855047833780329,
+        "corr": 0.8950193463865397,
+        "missed_frac": 0.0,
+        "mean_R": 0.012211111111111112
+      },
+      {
+        "k": 5,
+        "T": 0.5,
+        "delta_standard": 0.07857038087322153,
+        "delta_trajectory_aware": 0.09205495526328655,
+        "tau": 0.8428592382535569,
+        "corr": 0.5960058015861802,
+        "missed_frac": 0.02416918429003021,
+        "mean_R": 0.0009166666666666666
+      },
+      {
+        "k": 1,
+        "T": 1.0,
+        "delta_standard": 0.06333848836297308,
+        "delta_trajectory_aware": 0.053508403234596755,
+        "tau": 0.8733230232740539,
+        "corr": 0.8786920542696622,
+        "missed_frac": 0.0,
+        "mean_R": 0.4232866666666667
+      },
+      {
+        "k": 2,
+        "T": 1.0,
+        "delta_standard": 0.0540965516126294,
+        "delta_trajectory_aware": 0.055517379371116976,
+        "tau": 0.8918068967747412,
+        "corr": 0.9447034752573212,
+        "missed_frac": 0.0,
+        "mean_R": 0.14984
+      },
+      {
+        "k": 3,
+        "T": 1.0,
+        "delta_standard": 0.07043868831401726,
+        "delta_trajectory_aware": 0.07402943494743164,
+        "tau": 0.8591226233719655,
+        "corr": 0.9471844404780345,
+        "missed_frac": 0.0,
+        "mean_R": 0.05176888888888889
+      },
+      {
+        "k": 5,
+        "T": 1.0,
+        "delta_standard": 0.09090179878476748,
+        "delta_trajectory_aware": 0.08866585116409649,
+        "tau": 0.8181964024304651,
+        "corr": 0.8170697850539848,
+        "missed_frac": 0.0,
+        "mean_R": 0.007236666666666667
+      },
+      {
+        "k": 1,
+        "T": 2.0,
+        "delta_standard": 0.05800181349910833,
+        "delta_trajectory_aware": 0.05010444709387773,
+        "tau": 0.8839963730017834,
+        "corr": 0.8167468033825699,
+        "missed_frac": 0.0,
+        "mean_R": 0.6381722222222223
+      },
+      {
+        "k": 2,
+        "T": 2.0,
+        "delta_standard": 0.04274084806491609,
+        "delta_trajectory_aware": 0.040470070956760786,
+        "tau": 0.9145183038701679,
+        "corr": 0.910167064306343,
+        "missed_frac": 0.0,
+        "mean_R": 0.3439044444444444
+      },
+      {
+        "k": 3,
+        "T": 2.0,
+        "delta_standard": 0.04268865399648133,
+        "delta_trajectory_aware": 0.043248167441973205,
+        "tau": 0.9146226920070374,
+        "corr": 0.9487148105114448,
+        "missed_frac": 0.0,
+        "mean_R": 0.17329111111111115
+      },
+      {
+        "k": 5,
+        "T": 2.0,
+        "delta_standard": 0.06647104590419028,
+        "delta_trajectory_aware": 0.06330110036678893,
+        "tau": 0.8670579081916194,
+        "corr": 0.9211091375560153,
+        "missed_frac": 0.0,
+        "mean_R": 0.04338555555555555
+      },
+      {
+        "k": 1,
+        "T": 5.0,
+        "delta_standard": 0.05863592456582964,
+        "delta_trajectory_aware": 0.054963664597539055,
+        "tau": 0.8827281508683407,
+        "corr": 0.6392539537625934,
+        "missed_frac": 0.0,
+        "mean_R": 0.877538888888889
+      },
+      {
+        "k": 2,
+        "T": 5.0,
+        "delta_standard": 0.042995897683397684,
+        "delta_trajectory_aware": 0.04013433075933076,
+        "tau": 0.9140082046332046,
+        "corr": 0.7576958999868089,
+        "missed_frac": 0.0,
+        "mean_R": 0.7022200000000001
+      },
+      {
+        "k": 3,
+        "T": 5.0,
+        "delta_standard": 0.033637314394570496,
+        "delta_trajectory_aware": 0.03195514757099527,
+        "tau": 0.932725371210859,
+        "corr": 0.8398389387286634,
+        "missed_frac": 0.0,
+        "mean_R": 0.52809
+      },
+      {
+        "k": 5,
+        "T": 5.0,
+        "delta_standard": 0.029909502718953984,
+        "delta_trajectory_aware": 0.029207316457994934,
+        "tau": 0.940180994562092,
+        "corr": 0.9228207552226817,
+        "missed_frac": 0.0,
+        "mean_R": 0.26878222222222226
+      }
+    ],
+    "k_values": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "T_values": [
+      0.5,
+      1.0,
+      2.0,
+      5.0
+    ]
+  },
+  "random_search": {
+    "random_search_results": [
+      {
+        "config_idx": 0,
+        "delta": 0.12267546202841431,
+        "params": {
+          "lambda_0_shape": 7.359460098605516,
+          "lambda_0_scale": 0.1905683605613186,
+          "beta_a": 3.4859622563891826,
+          "beta_b": 4.258976846820409,
+          "mu_shape": 5.331168004026271,
+          "mu_scale": 1.437794222330226,
+          "k": 1,
+          "T": 5.0
+        }
+      },
+      {
+        "config_idx": 1,
+        "delta": 0.06458244038289715,
+        "params": {
+          "lambda_0_shape": 3.2672738607014606,
+          "lambda_0_scale": 0.30446991128719075,
+          "beta_a": 4.4981516662374155,
+          "beta_b": 5.618115902064556,
+          "mu_shape": 3.043899254125572,
+          "mu_scale": 1.2835638407764867,
+          "k": 5,
+          "T": 1.0
+        }
+      },
+      {
+        "config_idx": 2,
+        "delta": 0.04982087449987752,
+        "params": {
+          "lambda_0_shape": 5.155250754620383,
+          "lambda_0_scale": 0.3192327022120428,
+          "beta_a": 0.8063946994956854,
+          "beta_b": 6.642950491376865,
+          "mu_shape": 5.145804150094478,
+          "mu_scale": 1.159785992894934,
+          "k": 2,
+          "T": 5.0
+        }
+      },
+      {
+        "config_idx": 3,
+        "delta": 0.08126686264245157,
+        "params": {
+          "lambda_0_shape": 5.409905170224413,
+          "lambda_0_scale": 0.26054984192598774,
+          "beta_a": 4.944416231409915,
+          "beta_b": 1.297779716009337,
+          "mu_shape": 4.649160255969019,
+          "mu_scale": 1.769648870309129,
+          "k": 2,
+          "T": 0.5
+        }
+      },
+      {
+        "config_idx": 4,
+        "delta": 0.11465479508596388,
+        "params": {
+          "lambda_0_shape": 7.213881372121047,
+          "lambda_0_scale": 0.21445103538974308,
+          "beta_a": 4.5760255992602525,
+          "beta_b": 4.013368339828176,
+          "mu_shape": 3.121316749381121,
+          "mu_scale": 1.8688762183903977,
+          "k": 5,
+          "T": 0.5
+        }
+      },
+      {
+        "config_idx": 5,
+        "delta": 0.1447585797179293,
+        "params": {
+          "lambda_0_shape": 4.9706675175252055,
+          "lambda_0_scale": 0.16713465509878694,
+          "beta_a": 4.009597976315369,
+          "beta_b": 1.74845409817374,
+          "mu_shape": 1.1225147487917129,
+          "mu_scale": 1.7389571470802068,
+          "k": 2,
+          "T": 5.0
+        }
+      },
+      {
+        "config_idx": 6,
+        "delta": 0.2132816834629624,
+        "params": {
+          "lambda_0_shape": 5.560587785663988,
+          "lambda_0_scale": 0.07144078437382713,
+          "beta_a": 4.150959162522743,
+          "beta_b": 4.625647819363885,
+          "mu_shape": 1.4457935570673492,
+          "mu_scale": 0.15580126389923793,
+          "k": 1,
+          "T": 5.0
+        }
+      },
+      {
+        "config_idx": 7,
+        "delta": 0.11610221093077457,
+        "params": {
+          "lambda_0_shape": 7.139860977283002,
+          "lambda_0_scale": 0.06867783680577617,
+          "beta_a": 3.3411908021029912,
+          "beta_b": 1.8674840153975876,
+          "mu_shape": 4.429357585475865,
+          "mu_scale": 1.0233806147316715,
+          "k": 3,
+          "T": 0.5
+        }
+      },
+      {
+        "config_idx": 8,
+        "delta": 0.15022207663329898,
+        "params": {
+          "lambda_0_shape": 2.740028519105841,
+          "lambda_0_scale": 0.0723932946415565,
+          "beta_a": 2.5424070514491066,
+          "beta_b": 1.5755080995052495,
+          "mu_shape": 1.57425004610467,
+          "mu_scale": 1.4732352794505015,
+          "k": 3,
+          "T": 0.5
+        }
+      },
+      {
+        "config_idx": 9,
+        "delta": 0.09752810595363635,
+        "params": {
+          "lambda_0_shape": 3.4908938987464255,
+          "lambda_0_scale": 0.14438609283427092,
+          "beta_a": 3.630752440238508,
+          "beta_b": 7.19647255192977,
+          "mu_shape": 1.4079401851761355,
+          "mu_scale": 1.4403930566894219,
+          "k": 5,
+          "T": 1.0
+        }
+      },
+      {
+        "config_idx": 10,
+        "delta": 0.12301999532932299,
+        "params": {
+          "lambda_0_shape": 4.831742354284682,
+          "lambda_0_scale": 0.26073899619549623,
+          "beta_a": 1.686619108901519,
+          "beta_b": 1.3596750618487117,
+          "mu_shape": 1.1078302509776363,
+          "mu_scale": 1.842187741927472,
+          "k": 1,
+          "T": 0.5
+        }
+      },
+      {
+        "config_idx": 11,
+        "delta": 0.1507060794974499,
+        "params": {
+          "lambda_0_shape": 7.308100210094711,
+          "lambda_0_scale": 0.2539797889638392,
+          "beta_a": 4.126891772050416,
+          "beta_b": 0.7965968974243707,
+          "mu_shape": 3.8949428268753694,
+          "mu_scale": 0.23433563371829152,
+          "k": 5,
+          "T": 5.0
+        }
+      },
+      {
+        "config_idx": 12,
+        "delta": 0.05939305051885039,
+        "params": {
+          "lambda_0_shape": 6.276466269999585,
+          "lambda_0_scale": 0.087840047225365,
+          "beta_a": 4.997969903355789,
+          "beta_b": 4.238918462440824,
+          "mu_shape": 5.401387234471269,
+          "mu_scale": 1.0449600713233709,
+          "k": 3,
+          "T": 5.0
+        }
+      },
+      {
+        "config_idx": 13,
+        "delta": 0.07569434798625496,
+        "params": {
+          "lambda_0_shape": 7.410839049772368,
+          "lambda_0_scale": 0.14145623767829896,
+          "beta_a": 4.472932293519821,
+          "beta_b": 2.53826659464397,
+          "mu_shape": 2.8495153343719233,
+          "mu_scale": 1.026372639561759,
+          "k": 5,
+          "T": 5.0
+        }
+      },
+      {
+        "config_idx": 14,
+        "delta": 0.08125528253586044,
+        "params": {
+          "lambda_0_shape": 4.76622009505643,
+          "lambda_0_scale": 0.09408871775012367,
+          "beta_a": 2.9768264868580783,
+          "beta_b": 7.632941856493634,
+          "mu_shape": 1.1481890817324505,
+          "mu_scale": 1.4767978778247397,
+          "k": 3,
+          "T": 2.0
+        }
+      }
+    ],
+    "best_delta": 0.2132816834629624,
+    "n_configs": 15,
+    "agent_comparison": {
+      "agent_r1_best": 0.222,
+      "agent_r2_best": 0.461,
+      "random_best": 0.2132816834629624
+    }
+  }
+}
