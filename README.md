@@ -1,7 +1,5 @@
 # The Misordering Problem in Clinical Risk Prediction
 
-Code and data for: Basu S, Mathur MB. "Same Average Risk, Different Catastrophic Trajectories: The Misordering Problem in Clinical Risk Prediction." Submitted to *Medical Decision Making*, 2026.
-
 ## Overview
 
 Standard risk scores rank patients by their expected event rate. This study shows that two patients with the same expected rate can have different probabilities of accumulating multiple adverse events if one is prone to cascading crises (self-exciting dynamics). The misordering fraction quantifies how often standard scores produce incorrect pairwise rankings relative to trajectory-level catastrophic risk.
@@ -94,8 +92,3 @@ All random seeds are fixed at 42. Primary analysis: N=5,000 patients, 500 Monte 
 
 This code is provided for research reproducibility. Contact the corresponding author for reuse inquiries.
 
-## Contact
-
-Sanjay Basu, MD, PhD
-University of California San Francisco / Waymark
-sanjay.basu@waymarkcare.com
