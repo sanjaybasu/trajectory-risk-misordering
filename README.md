@@ -1,6 +1,5 @@
 # Using Adversarial AI Agents to Stress-Test Health Decision Models: Application to Clinical Risk Scoring
 
-Basu S, Mathur MB. Submitted to Medical Decision Making, 2026.
 
 ## Overview
 
