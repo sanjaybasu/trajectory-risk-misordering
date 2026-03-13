@@ -4,10 +4,12 @@ Generate Figures for Medical Decision Making Manuscript.
 
 Figure 1: AI agent discovery progression with clinically calibrated baseline
 Figure 2: r vs R scatter plot colored by beta (mechanism visualization)
+eFigure 1: NB fit quality (predicted vs simulated event count distributions)
 """
 
 import json
 import numpy as np
+from scipy import stats
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -18,7 +20,7 @@ matplotlib.rcParams['axes.linewidth'] = 0.8
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from core import compute_standard_risk, simulate_trajectory_risk
-from revised_analysis import generate_calibrated_population
+from revised_analysis import generate_calibrated_population, assess_nb_fit_quality
 
 
 def figure1():
@@ -51,33 +53,7 @@ def figure1():
     ax.set_xticklabels(labels, fontsize=7.5)
     ax.set_ylabel('Misordering Fraction ($\\Delta$)', fontsize=10)
 
-    # Bracket: clinically calibrated range
-    ax.annotate('', xy=(0, 0.075), xytext=(1, 0.075),
-                arrowprops=dict(arrowstyle='|-|', color='#5B9BD5', lw=1.2))
-    ax.text(0.5, 0.085, 'Clinically\ncalibrated', ha='center', fontsize=7,
-            color='#5B9BD5')
-
-    # Bracket: AI exploration
-    ax.annotate('', xy=(2, 0.49), xytext=(6, 0.49),
-                arrowprops=dict(arrowstyle='|-|', color='#C00000', lw=1.2))
-    ax.text(4, 0.50, 'AI-agent exploration', ha='center', fontsize=7,
-            color='#C00000')
-
-    # Annotation for negative result
-    ax.annotate('High Var($\\lambda_0$)\nstrengthened\nstandard score',
-                xy=(3, 0.044), xytext=(3.6, 0.17),
-                arrowprops=dict(arrowstyle='->', color='gray', lw=0.7),
-                fontsize=6.5, ha='center', color='#555555', style='italic')
-
-    # Annotation for implausible
-    ax.annotate('$\\mu \\approx 0.01$/yr\n(clinically\nimplausible)',
-                xy=(5, 0.461), xytext=(4.2, 0.39),
-                arrowprops=dict(arrowstyle='->', color='gray', lw=0.7),
-                fontsize=6.5, ha='center', color='#555555', style='italic')
-
     ax.axhline(y=0.5, color='black', linestyle='--', alpha=0.15, lw=0.6)
-    ax.text(6.5, 0.49, 'Random\nranking', fontsize=6.5, color='black',
-            alpha=0.3, va='top')
 
     ax.set_ylim(0, 0.56)
     ax.spines['top'].set_visible(False)
@@ -114,20 +90,9 @@ def figure2():
     x_line = np.linspace(r.min(), r.max(), 100)
     ax1.plot(x_line, np.polyval(coeffs, x_line), 'k--', alpha=0.3, lw=0.8)
 
-    rho = np.corrcoef(r, R)[0, 1]
     ax1.set_xlabel('Standard Risk Score ($r$)', fontsize=10)
     ax1.set_ylabel('Trajectory Risk ($R$)', fontsize=10)
     ax1.set_title('A', fontsize=11, fontweight='bold', loc='left')
-    ax1.text(0.05, 0.95, f'$\\rho$ = {rho:.2f}',
-             transform=ax1.transAxes, fontsize=8, va='top',
-             bbox=dict(boxstyle='round', facecolor='white', alpha=0.8,
-                       edgecolor='gray', linewidth=0.5))
-
-    ax1.annotate('High-$\\beta$ patients:\ntrajectory risk exceeds\nstandard score prediction',
-                 xy=(0.4, 0.45), xytext=(1.0, 0.55),
-                 arrowprops=dict(arrowstyle='->', color='#C00000', lw=0.8),
-                 fontsize=7, color='#C00000', ha='center')
-
     ax1.spines['top'].set_visible(False)
     ax1.spines['right'].set_visible(False)
 
@@ -155,12 +120,6 @@ def figure2():
     ax2.set_ylabel('Residual ($R$ $-$ predicted $R$ from $r$)', fontsize=10)
     ax2.set_xlabel('$\\beta$ Quartile', fontsize=10)
     ax2.set_title('B', fontsize=11, fontweight='bold', loc='left')
-    ax2.text(0.05, 0.95,
-             'Patients with high cascade\npropensity ($\\beta$) have higher\ntrajectory risk than $r$ predicts',
-             transform=ax2.transAxes, fontsize=7, va='top', color='#C00000',
-             bbox=dict(boxstyle='round', facecolor='white', alpha=0.8,
-                       edgecolor='gray', linewidth=0.5))
-
     ax2.spines['top'].set_visible(False)
     ax2.spines['right'].set_visible(False)
 
@@ -171,7 +130,55 @@ def figure2():
     print("Saved results/figure2_mechanism.pdf/.png")
 
 
+def efigure1_nb_fit():
+    """eFigure 1: NB fit quality — predicted vs simulated distributions.
+
+    3x3 grid of patients spanning (beta, lambda_0) percentiles.
+    Each panel shows empirical (bars) vs NB-predicted (line) PMF.
+    """
+    pop, _ = generate_calibrated_population(n=5000, seed=42, config="primary")
+    nb_fit = assess_nb_fit_quality(pop, T=2.0, k=3, n_sims=500, seed=42)
+
+    fig, axes = plt.subplots(3, 3, figsize=(10, 9))
+    axes = axes.flatten()
+
+    for i, patient in enumerate(nb_fit["nb_fit_patients"][:9]):
+        ax = axes[i]
+        bins = np.array(patient["bins"])
+        emp_pmf = np.array(patient["empirical_pmf"])
+        nb_pmf = np.array(patient["nb_pmf"])
+
+        ax.bar(bins, emp_pmf, width=0.8, alpha=0.5, color='#4472C4',
+               edgecolor='#4472C4', linewidth=0.5, label='Simulated')
+        ax.plot(bins, nb_pmf, 'o-', color='#C00000', markersize=3,
+                linewidth=1, label='NB predicted')
+
+        ax.set_title(
+            f"$\\beta$={patient['beta']:.2f}, "
+            f"$\\lambda_0$={patient['lambda_0']:.2f}\n"
+            f"$\\chi^2$ p={patient['chi2_p']:.2f}",
+            fontsize=8)
+        ax.set_xlim(-0.5, min(bins.max() + 0.5, 15))
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.tick_params(labelsize=7)
+
+        if i == 0:
+            ax.legend(fontsize=7, frameon=False)
+        if i >= 6:
+            ax.set_xlabel('Event count', fontsize=8)
+        if i % 3 == 0:
+            ax.set_ylabel('Probability', fontsize=8)
+
+    plt.tight_layout()
+    plt.savefig('results/efigure1_nb_fit.pdf', dpi=300, bbox_inches='tight')
+    plt.savefig('results/efigure1_nb_fit.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    print("Saved results/efigure1_nb_fit.pdf/.png")
+
+
 if __name__ == "__main__":
     figure1()
     figure2()
+    efigure1_nb_fit()
     print("\nAll figures generated.")
