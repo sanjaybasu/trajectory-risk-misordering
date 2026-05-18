@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+results/
+figures/
+
+# Local-only archives (not pushed to GitHub)
+_archive_MDM_submission_2026-05/
