@@ -1,51 +1,31 @@
-.PHONY: all analysis figures supplementary discovery clean check
+.PHONY: env pilot full-two-state full-nyha agents analyze all clean
 
-# Reproduce all results from scratch
-all: analysis supplementary discovery figures
+PY := /tmp/rework_venv/bin/python
+CODE := code
 
-# Primary analysis: literature-calibrated populations, bootstrap CIs, sensitivity grid, random search
-# Produces results/revised_manuscript_data.json (~10 min on Apple Silicon)
-analysis:
-	python revised_analysis.py
+env:
+	python3 -m venv /tmp/rework_venv
+	/tmp/rework_venv/bin/pip install --quiet -r requirements.txt
 
-# Generate manuscript figures from analysis results
-# Requires results/revised_manuscript_data.json
-figures:
-	python figures.py
+pilot:
+	cd $(CODE) && $(PY) run_pilot.py
 
-# Supplementary analyses: random search benchmarking and stability analyses
-# Produces results/supplementary_analyses.json
-supplementary:
-	python supplementary_analyses.py
+full-two-state:
+	cd $(CODE) && $(PY) run_full_experiments.py --two-state --n 3000 --n-sims-ts 300 --seeds 1 2 3 --skip-agent
 
-# Full pipeline: baseline, analytical bounds, multi-agent discovery
-# Requires ANTHROPIC_API_KEY for the agent competition (~45 min including API latency)
-discovery:
-	python run_discovery.py
+full-nyha:
+	cd $(CODE) && $(PY) run_full_experiments.py --nyha --n 5000 --n-sims-nyha 200 --seeds 1 2 3 --skip-agent
 
-# Verify results match expected values from the manuscript
-check:
-	python -c "\
-	import json, os; \
-	d = json.load(open('results/revised_manuscript_data.json')); \
-	p = d['primary_analysis']['primary']['scoring_comparison']; \
-	delta = p['standard']['delta']; \
-	c_stat = p['standard']['c_statistic']; \
-	brier = p['standard']['brier']['brier_score']; \
-	print(f'Standard score Delta: {delta:.3f} (expect 0.035)'); \
-	print(f'C-statistic: {c_stat:.3f} (expect 0.965)'); \
-	print(f'Brier score: {brier:.3f} (expect 0.142)'); \
-	assert abs(delta - 0.035) < 0.005, f'Delta out of range: {delta}'; \
-	assert abs(c_stat - 0.965) < 0.005, f'C-stat out of range: {c_stat}'; \
-	assert abs(brier - 0.142) < 0.005, f'Brier out of range: {brier}'; \
-	print('Primary analysis checks passed.'); \
-	assert os.path.exists('results/supplementary_analyses.json'), 'supplementary_analyses.json not found'; \
-	s = json.load(open('results/supplementary_analyses.json')); \
-	rs_max = s['expanded_random_search']['best_delta']; \
-	print(f'Random search max Delta: {rs_max:.3f} (expect ~0.270)'); \
-	assert abs(rs_max - 0.270) < 0.020, f'Random search max out of range: {rs_max}'; \
-	print('Supplementary checks passed.'); \
-	print('All checks passed.')"
+agents:
+	cd $(CODE) && $(PY) run_agents.py two_state --n 3000 --n-sims-ts 300
+	cd $(CODE) && $(PY) run_agents.py nyha --n-sims-nyha 200
+
+analyze:
+	cd $(CODE) && $(PY) analyze_results.py
+	cd $(CODE) && $(PY) mechanism_figure.py
+	cd $(CODE) && $(PY) supplementary_figures.py
+
+all: env full-two-state full-nyha agents analyze
 
 clean:
-	rm -rf results/*.pdf results/*.png __pycache__
+	rm -rf results/ figures/

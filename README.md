@@ -1,98 +1,89 @@
-# Using Adversarial AI Agents to Stress-Test Health Decision Models: Application to Clinical Risk Scoring
+# trajectory-risk-misordering
 
+Reproducible code for benchmarking LLM agents against Bayesian optimisation, evolutionary search, and uniform random search at structural sensitivity analysis of clinical microsimulations. The decision-relevant output is the misordering fraction Δ — the pairwise discordance probability between a standard risk score and Monte-Carlo trajectory risk.
 
-## Overview
+This repository contains the simulators, the four search methods behind a unified evaluator interface, and the analysis scripts that produce the head-to-head comparison.
 
-Clinical risk scores rank patients by expected event rates. Two patients with the same expected rate can have different probabilities of accumulating multiple adverse events if one is prone to cascading crises (self-exciting dynamics). The misordering fraction (Delta) quantifies how often standard scores produce incorrect pairwise rankings relative to trajectory-level catastrophic risk.
-
-This repository implements an adversarial artificial intelligence (AI) agent exploration framework that systematically searches for population configurations where standard risk scores fail. Multiple AI agents compete to discover parameter regimes that maximize the misordering fraction, then the discovered configurations are validated through independent Monte Carlo simulation. The case study applies this framework to clinical risk scoring using a Hawkes process model of patient event trajectories.
-
-All data are simulated. No patient data were used.
-
-## Repository Structure
+## Contents
 
 ```
-core.py                    # Population model, standard and trajectory risk scoring,
-                           #   misordering fraction computation
-analytical.py              # Analytical bounds using negative binomial approximation
-revised_analysis.py        # Primary analysis pipeline: calibrated populations,
-                           #   bootstrap confidence intervals, sensitivity grid,
-                           #   random search comparison
-supplementary_analyses.py  # Random search benchmarking and stability analyses
-discovery_platform.py      # Multi-agent AI scientist competition platform
-run_discovery.py           # Full discovery pipeline: baseline, analytical bounds,
-                           #   agent-driven exploration
-figures.py                 # Manuscript figure generation (Figures 1-2, eFigure 1)
-results/
-  revised_manuscript_data.json   # Primary analysis results reported in the manuscript
-  supplementary_analyses.json    # Random search and stability analysis results
-  round1.json                    # AI agent Round 1 competition results
-  figure1_discovery.pdf/.png     # Figure 1: Discovery progression
-  figure2_mechanism.pdf/.png     # Figure 2: Mechanism scatter and boxplot
-  efigure1_nb_fit.pdf/.png       # eFigure 1: Negative binomial fit
+code/
+  two_state_sim.py            Two-state self-exciting microsimulation (closed-form
+                              steady-state score; Monte-Carlo trajectory risk).
+  nyha_sim.py                 NYHA I–IV + Death multi-state heart-failure
+                              microsimulation. Cox-PH covariate effects on age,
+                              eGFR, ejection fraction, diabetes; competing-risk
+                              death; Hawkes-like post-hospitalisation self-
+                              excitation. No closed-form expected event rate.
+  search_methods.py           Random / BO (scikit-optimize gp_minimize, GP-EI) /
+                              CMA-ES (pycma). All accept a common
+                              (evaluator, bounds, n_calls) signature.
+  agent_search.py             Five-persona Claude Opus 4.7 agent search behind
+                              the same evaluator API. Personas: combinatorial
+                              extremiser, survival statistician, ergodicity
+                              physicist, stochastic-process theorist,
+                              algorithmic-fairness researcher. Full system
+                              prompts inline.
+  run_pilot.py                Low-fidelity smoke test of all four methods.
+  run_full_experiments.py     Production driver: 4 methods × 2 budgets
+                              (15 matched / 60 extended) × 3 seeds × 2 models.
+                              Incremental JSON saves.
+  run_agents.py               Standalone agent-search runner (uses
+                              ANTHROPIC_API_KEY environment variable).
+  fix_cma_matched.py          Re-runs CMA-ES at the matched 15-eval budget with
+                              an explicit popsize so the budget divides cleanly.
+  add_seed3_two_state.py      Adds an extra seed for the two-state model.
+  analyze_results.py          Summary table, per-method best-Δ figure, per-method
+                              cumulative-best-trace figure, mechanism Lasso.
+  mechanism_figure.py         Standardised Lasso coefficient bar plot.
+  supplementary_figures.py    Per-seed traces and Δ distribution boxplots.
 ```
 
-## Reproducing Results
+## Reproducing the comparison
 
-### Requirements
-
-Python 3.11 or later. Install dependencies:
-
-```
-pip install -r requirements.txt
-```
-
-The `anthropic` package is required only for the AI agent discovery (`discovery_platform.py` and `run_discovery.py`). All other analyses run without it.
-
-### Quick Start
-
-Verify that the included results match manuscript values:
-
-```
-make check
+```bash
+make env                  # creates a Python venv with all dependencies
+export ANTHROPIC_API_KEY=...
+make full-two-state
+make full-nyha
+make agents
+make analyze              # generates summary CSV + figures from saved JSON
 ```
 
-### Step-by-Step
+`make all` chains every step.
 
-1. Primary analysis (`make analysis` or `python revised_analysis.py`): Generates three literature-calibrated populations (primary, low-acuity, high-acuity), computes standard and trajectory-aware scores, runs bootstrap confidence intervals (B = 2,000), sensitivity analysis over (k, T) grid, and random search comparison. Outputs `results/revised_manuscript_data.json`. Runtime is approximately 10 minutes on Apple Silicon.
+## What the simulators define
 
-2. Supplementary analyses (`make supplementary` or `python supplementary_analyses.py`): Runs random search benchmarking (200 configurations) and population and Monte Carlo stability analyses. Outputs `results/supplementary_analyses.json`.
+**Two-state self-exciting.** Each simulated patient is characterised by four parameters: a baseline event rate λ₀, an elevated event rate λ₁ during a vulnerable state, a cascade propensity β (probability that an event in the stable state triggers a transition to the vulnerable state), and a recovery rate µ. The standard risk score is the closed-form steady-state event rate; the trajectory risk is the Monte-Carlo probability of ≥k events within T years. We include this model as an analytically tractable benchmark.
 
-3. Figures (`make figures` or `python figures.py`): Reads analysis results and generates Figure 1 (discovery progression), Figure 2 (mechanism scatter and boxplot), and eFigure 1 (negative binomial fit) as Portable Document Format (PDF) and Portable Network Graphics (PNG) files.
+**NYHA I-IV + Death multi-state HF.** Each simulated patient has age, eGFR, ejection fraction, and diabetes covariates and an initial NYHA class. In monthly cycles the patient progresses or regresses one NYHA class with state-dependent transition hazards, dies with NYHA- and covariate-dependent hazard, and experiences HF hospitalisations whose rate depends on the current NYHA class and covariates and is amplified above baseline for several months after each hospitalisation. The standard risk score is the Cox-PH expected baseline hospitalisation rate evaluated at the patient's *initial* NYHA class with covariate multipliers — the form a risk-prediction model trained on baseline data would produce. The trajectory risk is the Monte-Carlo probability of ≥k HF hospitalisations within T years. There is no closed-form expected hospitalisation rate.
 
-4. AI agent discovery (`make discovery` or `python run_discovery.py`): Runs baseline computation, analytical bounds, and the multi-agent competition. Requires an `ANTHROPIC_API_KEY` environment variable. Runtime is approximately 45 minutes including API latency. The agent competition is not required to reproduce the manuscript's numerical results; pre-computed agent results are included in the JSON files.
+## Search methods (shared evaluator)
 
-5. Full pipeline (`make all`): Runs analysis, supplementary, discovery, and figures in sequence.
+All four methods optimise Δ over the same continuous, bounded parameter space (`PARAM_BOUNDS` in each simulator). For the classical methods, three random seeds are run at each budget. For the LLM agents, five Claude Opus 4.7 personas propose configurations across three rounds (15 configurations total). Every proposal — regardless of method — is evaluated by running the same full microsimulation, so the comparison is paired.
 
-## Key Parameters
+## Mechanism recovery
 
-All random seeds are fixed at 42. Primary analysis uses N = 5,000 patients, 500 Monte Carlo trajectories per patient, T = 2.0 years, k = 3 events, and B = 2,000 bootstrap resamples.
+`analyze_results.py` pools every (parameter vector, Δ) pair from every method on each model and fits Lasso with 5-fold cross-validated penalty on z-standardised parameters. The non-zero coefficients identify which parameter manipulations move Δ in which direction across the entire explored space. The agents' free-text rationales are coded against these coefficients.
 
-| Parameter | Distribution | Mean | Calibration Source |
-|---|---|---|---|
-| Baseline event rate (lambda_0) | Gamma(3.0, 0.2) | 0.60 per year | Jencks et al., New England Journal of Medicine, 2009 |
-| Post-hospital rate elevation (lambda_1 / lambda_0) | 1 + Gamma(2.0, 0.8) | 2.6x | Krumholz, New England Journal of Medicine, 2013 |
-| Cascade propensity (beta) | Beta(3.0, 7.0) | 0.30 | Dharmarajan et al., Journal of the American Medical Association, 2013 |
-| Recovery rate (mu) | Gamma(4.0, 1.0) | 4.0 per year | Krumholz, New England Journal of Medicine, 2013 |
+## Notes
 
-## Key Results
+- All data are simulated. No patient data were used.
+- Random seeds are fixed throughout. The agent search uses one seed per model (agent stochasticity is internal to the Anthropic API).
+- The exact LLM model is Claude Opus 4.7 (Anthropic, model ID `claude-opus-4-7`). Full system prompts are in `code/agent_search.py:PERSONAS`.
+- Results JSON files and figures are not included in this repository; they are generated by running the pipeline above.
 
-| Metric | Value |
-|---|---|
-| Standard score concordance statistic (C-statistic) | 0.965 |
-| Misordering fraction (Delta) | 0.035 (95% confidence interval, 0.033-0.035) |
-| Brier score | 0.142 |
-| Validated worst-case Delta (agent-discovered) | 0.312 |
-| Random search best Delta (200 configurations) | 0.270 |
-| Population variability (standard deviation of Delta) | 0.0004 |
-| Monte Carlo variability (standard deviation of Delta) | 0.0006 |
+## Dependencies
+
+- Python 3.14
+- numpy, scipy
+- scikit-optimize (BO), pycma (CMA-ES)
+- scikit-learn (Lasso)
+- matplotlib
+- anthropic
+
+See `requirements.txt` and `Makefile:env` for exact versions.
 
 ## License
 
-This code is provided for research reproducibility. See LICENSE for terms. Contact the corresponding author for reuse inquiries.
-
-## Contact
-
-Sanjay Basu, MD, PhD
-University of California San Francisco / Waymark
-sanjay.basu@waymarkcare.com
+MIT.
